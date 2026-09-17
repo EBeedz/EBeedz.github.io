@@ -152,7 +152,7 @@
                 LogOutput("Bearer: "+bearer)
                 refresh = ScanTableForName(da_parsed,["refresh_token","refresh","token_refresh"])
                 LogOutput("\nRefresh: "+refresh)
-                setValue(ReadSearchPeram("code"),"!BEARER:::"+bearer+"!REFRESH:::"+refresh)
+                setValue("link_code_"+ReadSearchPeram("code"),"!BEARER:::"+bearer+"!REFRESH:::"+refresh)
             } catch (error) {
                 LogOutput("smth went wrong idfk")
             }
