@@ -1,0 +1,90 @@
+<body class="hide-scroll" style="background-color: #0c0315; margin: 0; overflow: hidden;">
+<style>
+    .devvy {
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 5rem 0rem;
+        color: #4a148c;
+        font-size: 2rem;
+        opacity: 0.75; 
+    }
+    .json {
+        font-family: sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 2rem;
+        margin: 0 auto;
+        color: #0c0315;
+        background-color: #4a148c;
+        font-size: 2.5rem;
+        opacity: 0.75;
+        width: 75%;
+        min-height: 10%;
+        max-height: 10%;
+    }
+    .output {
+        font-family: sans-serif;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        border: none;
+        border-radius: 2rem;
+        margin: 0 auto;
+        color: #4a148c;
+        background-color: #0c0315;
+        font-size: 1rem;
+        opacity: 0.75;
+        width: 75%;
+        min-height: 50%;
+        max-height: 50%;
+        margin: 1% 12.5%;
+        word-break: break-all;
+        white-space: pre-wrap;
+    }
+    .bg {
+        font-family: sans-serif;
+        color: #4a148c;
+        font-size: 0.75rem;
+        opacity: 0.25; 
+        position: absolute; 
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 200vw;
+        min-height: 200vh;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+        margin: 0;
+        padding: 0; 
+        text-align: center;
+    }
+
+    .hide-scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .hide-scroll::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+<h1 class="devvy" id="CODE">Amethyst Company</h1>
+
+<h5 class="bg" id="bg"></h5>
+<script>
+    function BackyDigits(lngth = 1) {
+        let reter = ""
+        for (let i = 0; i < lngth; i++) {
+            reter = reter + Math.floor(Math.random()*2).toString()
+        }
+        return reter
+    }
+    setInterval(() => {
+        document.getElementById("bg").textContent = BackyDigits(100000)
+    }, 100);
+</script>
+</body>
