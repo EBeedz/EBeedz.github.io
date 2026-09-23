@@ -1,0 +1,163 @@
+<body class="hide-scroll" style="background-color: #0c0315; margin: 0; overflow: hidden;">
+<style>
+    .devvy {
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 5rem 0rem;
+        color: #4a148c;
+        font-size: 2rem;
+        opacity: 0.75; 
+    }
+    .json {
+        font-family: sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 2rem;
+        margin: 0 auto;
+        color: #0c0315;
+        background-color: #4a148c;
+        font-size: 2.5rem;
+        opacity: 0.75;
+        width: 75%;
+        min-height: 10%;
+        max-height: 10%;
+    }
+    .output {
+        font-family: sans-serif;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        border: none;
+        border-radius: 2rem;
+        margin: 0 auto;
+        color: #4a148c;
+        background-color: #0c0315;
+        font-size: 1rem;
+        opacity: 0.75;
+        width: 75%;
+        min-height: 50%;
+        max-height: 50%;
+        margin: 1% 12.5%;
+        word-break: break-all;
+        white-space: pre-wrap;
+    }
+    .bg {
+        font-family: sans-serif;
+        color: #4a148c;
+        font-size: 0.75rem;
+        opacity: 0.25; 
+        position: absolute; 
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 200vw;
+        min-height: 200vh;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+        margin: 0;
+        padding: 0; 
+        text-align: center;
+    }
+
+    .hide-scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .hide-scroll::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+<h1 class="devvy" id="CODE">Amethyst Link [null]</h1>
+
+<input type="file" id="JSON" accept=".json" style="display: none;">
+<button class="json" id="JSON BUTTON">LOAD JSON</button>
+<h1 class="output" id="OUTPUT">meow</h1>
+
+<h5 class="bg" id="bg"></h5>
+<script>
+    document.getElementById("OUTPUT").textContent = "\n"
+
+    function ReadSearchPeram(thingy) {
+        return (new URLSearchParams(window.location.search)).get(thingy)
+    }
+    function BackyDigits(lngth = 1) {
+        let reter = ""
+        for (let i = 0; i < lngth; i++) {
+            reter = reter + Math.floor(Math.random()*2).toString()
+        }
+        return reter
+    }
+    function ScanTableForName(da_tble, looking_foreskin) {
+        let reter = null
+        looking_foreskin.forEach(eea => {
+            const mybe = da_tble[eea]
+            if (mybe != null) {
+                reter = mybe
+            }
+        })
+        return reter
+    }
+    function LogOutput(thingy) {
+        document.getElementById("OUTPUT").textContent = document.getElementById("OUTPUT").textContent+thingy+"\n"
+    }
+
+    const API_BASE = "https://ebeedz.pythonanywhere.com";
+    const API_KEY = "meow";
+
+    async function setValue(key, value) {
+        const res = await fetch(`${API_BASE}/data/${encodeURIComponent(key)}`, {
+        method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-api-key": API_KEY
+            },
+            body: JSON.stringify({ value })
+        });
+        return res.json();
+    }
+
+    async function getValue(key) {
+        const res = await fetch(`${API_BASE}/data/${encodeURIComponent(key)}`, {
+            headers: { "x-api-key": API_KEY }
+        });
+        if (res.status === 404) return null; // not found or expired
+        return res.json();
+    }
+
+    let refresh = ""
+    let bearer = ""
+
+    document.getElementById("CODE").textContent = "Amethyst Link ["+ReadSearchPeram("code")+"]"
+    setInterval(() => {
+        document.getElementById("bg").textContent = BackyDigits(100000)
+    }, 100);
+
+    document.getElementById("JSON BUTTON").addEventListener('click', () => {
+        document.getElementById("JSON").click();
+    });
+    document.getElementById("JSON").addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) return; 
+        document.getElementById("OUTPUT").textContent = "\n"
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const da_parsed = JSON.parse(e.target.result);
+                bearer = ScanTableForName(da_parsed,["bearer","token","auth","authenticate","authenticates","authentications"])
+                LogOutput("Bearer: "+bearer)
+                refresh = ScanTableForName(da_parsed,["refresh_token","refresh","token_refresh"])
+                LogOutput("\nRefresh: "+refresh)
+                setValue("link_code_"+ReadSearchPeram("code"),"!BEARER:::"+bearer+"!REFRESH:::"+refresh)
+            } catch (error) {
+                LogOutput("smth went wrong idfk")
+            }
+        };
+        reader.readAsText(file);
+    });
+</script>
+</body>
